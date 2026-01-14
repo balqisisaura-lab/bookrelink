@@ -247,6 +247,18 @@ st.markdown("""
         box-shadow: 0 3px 10px rgba(245,139,5,0.3);
     }
     
+    .seller-badge {
+        display: inline-block;
+        padding: 8px 20px;
+        border-radius: 25px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        box-shadow: 0 3px 10px rgba(102,126,234,0.3);
+    }
+    
     /* Container for book cards */
     div[data-testid="stVerticalBlock"] > div:has(div.element-container) {
         background: rgba(255, 255, 255, 0.5);
@@ -323,6 +335,26 @@ st.markdown("""
         text-decoration: none;
     }
     
+    .wa-button-seller {
+        display: inline-block;
+        background: white;
+        color: #667eea;
+        padding: 15px 35px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1rem;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .wa-button-seller:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        text-decoration: none;
+    }
+    
     /* Info cards */
     .info-card {
         background: rgba(255, 255, 255, 0.5);
@@ -351,6 +383,34 @@ st.markdown("""
     .info-card p {
         color: #666;
         line-height: 1.6;
+    }
+    
+    .seller-card {
+        background: rgba(102, 126, 234, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem;
+        border-radius: 15px;
+        border: 2px solid rgba(102, 126, 234, 0.3);
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .seller-card:hover {
+        transform: translateY(-3px);
+        background: rgba(102, 126, 234, 0.15);
+        border-color: rgba(102, 126, 234, 0.6);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+    }
+    
+    .seller-card h4 {
+        color: #667eea;
+        margin-bottom: 0.5rem;
+        font-size: 1.3rem;
+    }
+    
+    .seller-card p {
+        color: #555;
+        margin: 0.3rem 0;
     }
     
     /* Hide Streamlit elements */
@@ -426,6 +486,11 @@ st.markdown("""
             font-size: 0.8rem;
         }
         
+        .seller-badge {
+            padding: 6px 15px;
+            font-size: 0.8rem;
+        }
+        
         /* Button mobile */
         .stButton > button {
             padding: 10px 20px;
@@ -494,6 +559,19 @@ st.markdown("""
         /* Reduce glitter effect on mobile for performance */
         .stApp::after {
             opacity: 0.5;
+        }
+        
+        .seller-card {
+            padding: 1rem;
+        }
+        
+        .seller-card h4 {
+            font-size: 1.1rem;
+        }
+        
+        .wa-button-seller {
+            padding: 12px 25px;
+            font-size: 0.9rem;
         }
     }
     
@@ -588,8 +666,26 @@ df_books['Link'] = df_books['FileID'].apply(
     lambda x: f'https://drive.google.com/file/d/{x}/preview'
 )
 
+# DATA BUKU BEKAS
+bekas_books_data = {
+    'Judul': [
+        'Kalkulus Purcell Edisi 9 Jilid 1 Bahasa Indonesia',
+        'Aljabar Linear dan Matriks'
+    ],
+    'Penulis': [
+        'Purcell',
+        'Ririen Kusumawati, S.Kom'
+    ],
+    'NoWA': [
+        '083821757366',
+        '082120571561'
+    ]
+}
+
+df_bekas = pd.DataFrame(bekas_books_data)
+
 # TABS NAVIGASI
-tab1, tab2 = st.tabs(["🏠 Home", "📞 Contact Admin"])
+tab1, tab2, tab3 = st.tabs(["🏠 Home", "📖 Buku Bekas", "📞 Contact Admin"])
 
 # ============= TAB HOME =============
 with tab1:
@@ -641,64 +737,7 @@ with tab1:
     else:
         st.warning("🔍 Tidak ada buku yang ditemukan. Coba kata kunci lain.")
 
-# ============= TAB CONTACT =============
+# ============= TAB BUKU BEKAS =============
 with tab2:
     st.markdown("""
-    <div class="contact-section">
-        <h2>📱 Hubungi Admin BookRelink</h2>
-        <p style='font-size: 1.2rem; margin: 20px 0;'>
-            Punya pertanyaan? Ingin request buku tertentu?<br>
-            Atau butuh bantuan mengakses buku?
-        </p>
-        <p style='font-size: 1.1rem; margin: 20px 0;'>
-            Admin kami siap membantu Anda!
-        </p>
-        <a href="https://wa.me/62895330277258?text=Halo%20admin%20BookRelink,%20saya%20ingin%20bertanya%20tentang%20buku" 
-           target="_blank" 
-           class="wa-button">
-            💬 Chat WhatsApp Admin
-        </a>
-        <p style='margin-top: 30px; font-size: 1rem; opacity: 0.95;'>
-            📞 WhatsApp: 0895-3302-77258
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("<br><br>", unsafe_allow_html=True)
-    
-    # Info cards
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("""
-        <div class="info-card">
-            <h3 style="color: #f58b05;">📚 Request Buku</h3>
-            <p>Buku yang kamu cari tidak ada? Hubungi admin untuk request!</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("""
-        <div class="info-card">
-            <h3 style="color: #7fbbdd;">💡 Bantuan Teknis</h3>
-            <p>Kesulitan membuka buku? Admin siap membantu!</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown("""
-        <div class="info-card">
-            <h3 style="color: #ffe22f;">⭐ Saran & Masukan</h3>
-            <p>Punya saran untuk BookRelink? Sampaikan ke admin!</p>
-        </div>
-        """, unsafe_allow_html=True)
-
-# Footer
-st.markdown("<br><br>", unsafe_allow_html=True)
-st.markdown("<hr>", unsafe_allow_html=True)
-st.markdown("""
-<div style='text-align: center; color: #7fbbdd; padding: 2rem 0;'>
-    <p style='font-size: 1rem; font-weight: 600;'>© 2025 BookRelink - Perpustakaan Digital</p>
-    <p style='font-size: 0.9rem;'>Dibuat dengan ❤️ untuk memudahkan akses pendidikan</p>
-</div>
-""", unsafe_allow_html=True)
+    <div
