@@ -522,7 +522,7 @@ bekas_books_data = {
 df_bekas = pd.DataFrame(bekas_books_data)
 
 # TABS NAVIGASI
-tab1, tab2, tab3 = st.tabs(["🏠 Home", "📖 Buku Bekas", "📞 Contact Admin"])
+tab1, tab2, tab3 = st.tabs(["📕 Ebook", "📖 Buku Bekas", "📞 Contact Admin"])
 
 # ============= TAB HOME =============
 with tab1:
@@ -530,8 +530,8 @@ with tab1:
     
     with col1:
         search_query = st.text_input(
-            "Cari Buku", 
-            placeholder="🔍 Ketik judul buku atau nama penulis...",
+            "Cari Ebook", 
+            placeholder="🔍 Ketik judul ebook atau nama penulis...",
         )
     
     with col2:
