@@ -450,7 +450,7 @@ st.markdown("""
 st.markdown("""
 <div class="main-header">
     <h1>📚 BookRelink</h1>
-    <p>Perpustakaan Digital - Akses Buku Kapan Saja, Dimana Saja</p>
+    <p>Baca Mudah, Daur Ulang Buku, Satu Klik di BookReLink</p>
 </div>
 """, unsafe_allow_html=True)
 
